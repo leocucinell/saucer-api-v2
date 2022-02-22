@@ -7,5 +7,21 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leocucinell/saucer-api-v2.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/leocucinell/saucer-api-v2/issues"
+  },
+  "homepage": "https://github.com/leocucinell/saucer-api-v2#readme",
+  "devDependencies": {
+    "prisma": "^3.10.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.10.0",
+    "dotenv": "^16.0.0"
+  }
 }
