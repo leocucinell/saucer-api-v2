@@ -8,6 +8,7 @@ const routes = require('./routes')
 app.use(express.json({extended: false}));
 
 //SECTION: Routes
+app.use('/city', routes.city)
 
 
 //SECTION: Server Bind
