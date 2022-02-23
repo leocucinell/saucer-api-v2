@@ -9,6 +9,7 @@ app.use(express.json({extended: false}));
 
 //SECTION: Routes
 app.use('/auth', routes.auth);
+//~~Protect below routes with Bearer token~~
 app.use('/user', routes.user);
 app.use('/city', routes.city);
 app.use('/reservation', routes.reservation);
