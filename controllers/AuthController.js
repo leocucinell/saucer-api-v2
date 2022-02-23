@@ -74,8 +74,25 @@ const login_user = async (req, res) => {
     }
 }
 
-const logout_user = (req, res) => {
-    res.send('User logged out');
+const logout_user = async (req, res) => {
+    try{
+        const updateUser = await prisma.customer.update({
+            where: {
+                username: req.body.username
+            },
+            data: {
+                refreshToken: ''
+            }
+        });
+        res.status(200).json({
+            message: 'successfully logged user out.'
+        });
+    } catch(err) {
+        console.log(err)
+        res.status(400).json({
+            message: "Error logging user out"
+        });
+    }
 }
 
 //SECTION: Exports
