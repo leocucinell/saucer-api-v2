@@ -17,6 +17,7 @@ model Customer{
   email String @unique
   password String
   phoneNumber String
+  refreshToken String?
   reservations Reservation[] //MANY
   resturaunt Restuarant? 
 }
