@@ -20,7 +20,7 @@ const login_user = async (req, res) => {
             }
         });
         if(clientExistsCheck){
-            const comparedPass = await bcrypt.compare(req.body.password, clientExistsCheck.password, (err, result) => {
+            const comparedPass = await bcrypt.compare(req.body.password, clientExistsCheck.password, async (err, result) => {
                 if(err){
                     res.status(400).json({
                         message: 'Unable to compare passwords, please try again'
@@ -44,6 +44,20 @@ const login_user = async (req, res) => {
                         {expiresIn: '1w'}
                     );
                     //add the refresh token to the user.
+                    const updatedUser = await prisma.customer.update({
+                        where: {
+                            username: req.body.username
+                        },
+                        data: {
+                            refreshToken
+                        }
+                    });
+                    res.status(200).json({
+                        message: 'User logged in!',
+                        accessToken,
+                        refreshToken,
+                        userData: updatedUser
+                    });
                 }
             })
         } else {
