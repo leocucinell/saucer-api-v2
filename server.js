@@ -8,7 +8,11 @@ const routes = require('./routes')
 app.use(express.json({extended: false}));
 
 //SECTION: Routes
-app.use('/city', routes.city)
+app.use('/auth', routes.auth);
+app.use('/user', routes.user);
+app.use('/city', routes.city);
+app.use('/reservation', routes.reservation);
+app.use('/restuarant', routes.restuarant);
 
 
 //SECTION: Server Bind
