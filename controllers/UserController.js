@@ -20,7 +20,7 @@ const create_user = async (req, res) => {
             where: {
                 email: req.body.email
             }
-        })
+        });
         if(userCheck || emailCheck){
             res.status(400).json({
                 message: "User with that email or password already exist"
