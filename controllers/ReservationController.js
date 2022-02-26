@@ -14,7 +14,7 @@ const retrieve_user_reservations = async (req, res) => {
     try{
         const userReservations = await prisma.customer.findUnique({
             where: {
-                id: req.body.id
+                id: parseInt(req.query.id)
             },
             select: {
                 reservations: true
@@ -37,7 +37,7 @@ const retrieve_restuarant_reservations = async (req, res) => {
     try{
         const userReservations = await prisma.restuarant.findUnique({
             where: {
-                id: req.body.id
+                id: req.query.id
             },
             select: {
                 reservations: true
