@@ -27,7 +27,7 @@ const login_user = async (req, res) => {
                     });
                 }
                 else if (!result) {
-                    res.status(400).json({
+                    res.status(401).json({
                         message: 'Incorrect password, please try again'
                     });
                 } else {

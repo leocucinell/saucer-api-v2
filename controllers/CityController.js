@@ -8,12 +8,11 @@ const prisma = new PrismaClient()
 //SECTION: Related methods
 const retrieve_cities_list = async (req, res) => {
     try{
-
         const cities_list = await prisma.city.findMany()
         res.status(200).json({
             message: 'success',
             body: cities_list
-        })
+        });
 
     } catch(err) {
         console.log(`Error retrieving cities: ${err}`);

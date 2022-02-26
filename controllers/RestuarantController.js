@@ -5,11 +5,28 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
-const { restuarant } = require('.');
 
 //SECTION: Related methods
-const retrieve_city_restuarant_list = (req, res) => {
-    res.send('List of restuarants by city');
+const retrieve_city_restuarant_list = async (req, res) => {
+    try{
+        const cityRestuarants = await prisma.city.findUnique({
+            where: {
+                id: parseInt(req.query.id)
+            },
+            select: {
+                restuarants_list: true
+            }
+        });
+        res.status(200).json({
+            message: 'Success!',
+            data: cityRestuarants
+        });
+    } catch(err) {
+        console.log(err)
+        res.status(400).json({
+            message: "error retrieving city restuarant list"
+        });
+    }
 }
 
 const retrieve_restuarant = (req, res) => {
