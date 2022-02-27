@@ -9,6 +9,7 @@ const controller = require('../controllers');
 //NOTE: Base -> /auth
 router.route('/login').post(controller.auth.login_user);
 router.route('/logout').post(controller.auth.logout_user);
+router.route('/validateRefresh').post(controller.auth.validateRefresh);
 
 
 //SECTION: Exports

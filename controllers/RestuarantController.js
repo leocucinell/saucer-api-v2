@@ -29,8 +29,23 @@ const retrieve_city_restuarant_list = async (req, res) => {
     }
 }
 
-const retrieve_restuarant = (req, res) => {
-    res.send('Retrieve single restuarant');
+const retrieve_restuarant = async (req, res) => {
+    try {
+        const retrievedRestuarant = await prisma.restuarant.findUnique({
+            where: {
+                id: parseInt(req.query.id)
+            }
+        });
+        res.status(200).json({
+            'message': "Success!",
+            data: retrievedRestuarant
+        });
+    } catch(err) {
+        console.log(err)
+        res.status(400).json({
+            message: "Error retrieving restuaraunt"
+        })
+    }
 }
 
 const create_restuarant = async (req, res) => {
