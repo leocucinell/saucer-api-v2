@@ -78,13 +78,20 @@ const update_user = async (req, res) => {
             data: {
                 username: req.body.username,
                 email: req.body.email,
-                password: result,
                 phoneNumber: req.body.phoneNumber
             }
         });
+        console.log(updatedUser);
+        const userResponse = {
+            id: updatedUser.id,
+            username: updatedUser.username,
+            email: updatedUser.email,
+            phoneNumber: updatedUser.phoneNumber,
+            refreshToken: updatedUser.refreshToken
+        }
         res.status(200).json({
             message: 'Updated User!',
-            userData: updatedUser
+            userData: userResponse
         });
     } catch(err) {
         console.log(err)

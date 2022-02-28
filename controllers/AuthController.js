@@ -98,44 +98,53 @@ const logout_user = async (req, res) => {
 const validateRefresh = async (req, res) => {
     const token = req.query.refreshToken;
     const validated = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, async (err, decoded) => {
-        if(err){
-            console.log(err);
+        try {
+            if(err){
+                console.log(err);
+                res.status(400).json({
+                    message: "Error validating refresh token"
+                });
+            }
+            //token has been decoded
+            //issue new access & refresh token to the user 
+            const accessToken = jwt.sign(
+                {"username": decoded.username},
+                process.env.ACCESS_TOKEN_SECRET,
+                {expiresIn: '1d'}
+            );
+            const refreshToken = jwt.sign(
+                {"username": decoded.username},
+                process.env.REFRESH_TOKEN_SECRET,
+                {expiresIn: '1w'}
+            );
+            //Update the refresh token for the user with that username
+            const updateRefresh = await prisma.customer.update({
+                where: {
+                    id: parseInt(req.query.id)
+                },
+                data: {
+                    refreshToken: refreshToken
+                }
+            });
+            const userResponse = {
+                id: updateRefresh.id,
+                username: updateRefresh.username,
+                email: updateRefresh.email,
+                phoneNumber: updateRefresh.phoneNumber,
+                refreshToken: updateRefresh.refreshToken,
+                accessToken: accessToken
+            }
+            res.status(200).json({
+                message: 'Success!',
+                data: userResponse
+            });
+        } catch (err) {
+            console.log('ERROR VALIDATING DATA')
+            console.log(err)
             res.status(400).json({
-                message: "Error validating refresh token"
+                message: "error validating data"
             });
         }
-        //token has been decoded
-        //issue new access & refresh token to the user 
-        const accessToken = jwt.sign(
-            {"username": decoded.username},
-            process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn: '1d'}
-        );
-        const refreshToken = jwt.sign(
-            {"username": decoded.username},
-            process.env.REFRESH_TOKEN_SECRET,
-            {expiresIn: '1w'}
-        );
-        //Update the refresh token for the user with that username
-        const updateRefresh = await prisma.customer.update({
-            where: {
-                username: decoded.username
-            },
-            data: {
-                refreshToken: refreshToken
-            }
-        });
-        const userResponse = {
-            id: updateRefresh.id,
-            username: updateRefresh.username,
-            email: updateRefresh.email,
-            phoneNumber: updateRefresh.phoneNumber,
-            refreshToken: updateRefresh.refreshToken
-        }
-        res.status(200).json({
-            message: 'Success!',
-            data: userResponse
-        });
     });
 }
 
