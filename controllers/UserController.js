@@ -81,7 +81,7 @@ const update_user = async (req, res) => {
                 phoneNumber: req.body.phoneNumber
             }
         });
-        console.log(updatedUser);
+        
         const userResponse = {
             id: updatedUser.id,
             username: updatedUser.username,

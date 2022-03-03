@@ -27,6 +27,7 @@ model Reservation {
   title String @default("")
   description String? @default("")
   startTime String
+  date String
   owner Customer @relation(fields: [owner_id], references: [id])
   owner_id Int
   restuarant Restuarant @relation(fields: [restuarant_id], references: [id]) //ONE

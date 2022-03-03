@@ -2,7 +2,8 @@
     This file contains all API route methods pertaining to reservations
 */
 //SECTION: Requires
-const { PrismaClient } = require('@prisma/client')
+const { PrismaClient } = require('@prisma/client');
+const { json } = require('express');
 const prisma = new PrismaClient()
 
 //SECTION: Related methods
@@ -34,10 +35,11 @@ const retrieve_user_reservations = async (req, res) => {
 }
 
 const retrieve_restuarant_reservations = async (req, res) => {
+    //retrieves a restuarant and includes all reservations
     try{
         const userReservations = await prisma.restuarant.findUnique({
             where: {
-                id: req.query.id
+                id: parseInt(req.query.id)
             },
             select: {
                 reservations: true
@@ -51,7 +53,7 @@ const retrieve_restuarant_reservations = async (req, res) => {
     } catch(err) {
         console.log(err)
         res.status(400).json({
-            message: "Error retrieving user reservations"
+            message: "Error retrieving restuarant reservations"
         });
     }
 }
