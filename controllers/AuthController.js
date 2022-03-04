@@ -76,6 +76,7 @@ const login_user = async (req, res) => {
 
 const logout_user = async (req, res) => {
     try{
+        console.log(req)
         const updateUser = await prisma.customer.update({
             where: {
                 username: req.body.username

@@ -62,12 +62,14 @@ const add_reservation = async (req, res) => {
     try{
         //create the reservation and set the owner_id & resturaunt_id
         const createdReservation = await prisma.reservation.create({
+            //TODO: Change the data object to match new schema
             data: {
                 startTime: req.body.startTime,
                 owner_id: req.body.owner_id,
-                restuarant_id: req.body.restuarant_id,
+                restuarant_id: parseInt(req.body.restuarant_id),
                 title: req.body.title,
-                description: req.body.description
+                description: req.body.description,
+                date: req.body.date
             }
         });
         res.status(200).json({
